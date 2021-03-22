@@ -1,14 +1,17 @@
-# AzCopy on Docker
+# Sync via AzCopy on Docker
 
 ## Usage
 
-### Copy all blobs to another storage account
+### Sync data between Local/AZBlob or AZBlob/AZBlob
 
-```bash
-docker run -it --rm hawaku/azcopy azcopy \
-    --source https://myaccount.blob.core.windows.net/mycontainer1 \
-    --destination https://myaccount.blob.core.windows.net/mycontainer2 \
-    --source-key <key> \
-    --dest-key <key>
-    --recursive
-```
+Specify SOURCE and DEST as environment variables.
+
+version: '2'
+services:
+  azcopy:
+    image: christsent/docker-azcopy-sync	
+    environment:
+      SOURCE: </path/to/local> OR <https://storage-account-name.blob.core.windows.net/container-name>
+      DEST: </path/to/local> OR <https://storage-account-name.blob.core.windows.net/container-name>
+    volumes:
+      - /data/on/server:/path/to/local
