@@ -24,4 +24,6 @@ RUN set -ex \
 
 COPY --from=Builder /workdir/azcopy /usr/local/bin
 
-CMD [ "azcopy", "--help" ]
+RUN echo -e "azcopy login --identity\nazcopy sync $SOURCE $DEST --recursive=true" > /entrypoint.sh
+
+ENTRYPOINT [ "/bin/bash", "/entrypoint.sh" ]
